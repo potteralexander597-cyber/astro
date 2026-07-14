@@ -235,19 +235,21 @@ with tab2:
             )
         )
 
-        # 바람 벡터장 화살표 추가 (격자 시닝 처리하여 가시성 확보)
+       # 바람 벡터장 화살표 추가 (Streamtube 대신 3D 공간 벡터 표현에 적합한 Cone 사용)
         skip = 3
         fig_b.add_trace(
-            gr.Streamtube(
+            gr.Cone(
                 x=X[::skip, ::skip].flatten() / 1000,
                 y=Y[::skip, ::skip].flatten() / 1000,
-                z=np.zeros_like(X[::skip, ::skip].flatten()),
+                z=np.zeros_like(X[::skip, ::skip].flatten()), # 평면 z=0 위에 배치
                 u=U_field[::skip, ::skip].flatten(),
                 v=V_field[::skip, ::skip].flatten(),
-                w=w_e[::skip, ::skip].flatten() / 10,
-                sizeref=0.5,
-                arrowscale=0.3,
-                name="Stream Wind",
+                w=w_e[::skip, ::skip].flatten() / 100,       # 연직 속도 반영
+                sizemode="scaled",
+                sizeref=2.0,
+                colorscale="Portland",
+                showscale=False,
+                name="Wind Vector"
             )
         )
 
